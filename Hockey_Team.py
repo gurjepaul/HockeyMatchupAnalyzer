@@ -2,7 +2,6 @@ from sportsreference.nhl.teams import Teams
 
 
 class Hockey_Team(object):
-
     # Constructor takes in organization obj from library
     def __init__(self, organization):
         self.organization = organization
@@ -58,7 +57,7 @@ class Hockey_Team(object):
 
     # Returns teams average goals per game
     def goals_per_game(self) -> float:
-        return self.organization.total_goals_per_game
+        return self.goals_for() / self.games_played()
 
     # Returns teams shooting percentage
     def shooting_percentage(self) -> float:
@@ -71,7 +70,7 @@ class Hockey_Team(object):
     # Returns teams spsv% (pdo) I DONT THINK THIS IS CORRECT
     def pdo(self) -> float:
         return self.organization.shooting_percentage \
-               + (100 * self.organization.save_percentage) * 10
+               + (100 * self.organization.save_percentage)
 
     # Returns teams number of powerplay opportunities
     def pp_opportunities(self) -> int:
@@ -125,36 +124,38 @@ class Hockey_Team(object):
         # Checking points percentage
         # Points percentage above 65%
         if self.points_percentage() >= .650:
-            key_takeaways.append(" + Team has one of the highest point percentages in the league")
+            key_takeaways\
+                .append(" (+) Team has one of the highest point percentages in the league")
         # Points percentage above 57.5%
         elif self.points_percentage() >= .575:
-            key_takeaways.append(" + Team has a strong points percentage")
+            key_takeaways.append(" (+) Team has a strong points percentage")
         # Points percentage below 45%
         elif self.points_percentage() <= .450:
-            key_takeaways.append(" - Team has one of the lowest point percentages in the league")
+            key_takeaways\
+                .append(" (-) Team has one of the lowest point percentages in the league")
         # Points percentage below 50%
         elif self.points_percentage() <= .500:
-            key_takeaways.append(" - Team has a weak points percentage")
+            key_takeaways.append(" (-) Team has a weak points percentage")
 
         # Checking team rank
         # Top 5 team in the league
         if self.league_standing() <= 5:
-            key_takeaways.append(" + One of the top teams in the league")
+            key_takeaways.append(" (+) One of the top teams in the league")
         # Top 10 team in the league
         elif self.league_standing() <= 10:
-            key_takeaways.append(" + Team has a high league standing")
+            key_takeaways.append(" (+) Team has a high league standing")
         # bottom 6 team in the league
         elif self.league_standing() >= 25:
-            key_takeaways.append(" - One of worst teams in the league")
+            key_takeaways.append(" (-) One of worst teams in the league")
         # Bottom 11 team in the league
         elif self.league_standing() >= 20:
-            key_takeaways.append(" - Team has a low league standing")
+            key_takeaways.append(" (-) Team has a low league standing")
 
         print("Key Takeaways:")
 
         # If key_takeaways is empty their stats are average
         if len(key_takeaways) == 0:
-            print(" +/- Pretty average team all around the board")
+            print(" (+/-) Pretty average team all around the board")
         # Output takeaways found earlier
         else:
             # Outputting contents of key_takeaways
@@ -178,7 +179,7 @@ class Hockey_Team(object):
             print(" Goal Differential: {}"
                   .format(self.goal_differential()))
         # Goals per game
-        print(" Goals per Game: {}".format(self.goals_per_game()))
+        print(" Goals per Game: {:.3}".format(self.goals_per_game()))
         # Shooting percentage
         print(" Shooting percentage (SP%): {}%"
               .format(self.shooting_percentage()))
@@ -186,9 +187,80 @@ class Hockey_Team(object):
         print(" Save percentage (SV%): {:.1%}"
               .format(self.save_percentage()))
         # PDO
-        pdo = ((self.shooting_percentage()
-                + (100 * self.save_percentage())) * 10)
-        print(" PDO (SPSV%): {:.0f}\n".format(pdo))
+        print(" PDO (SPSV%): {}\n".format(self.pdo()))
+
+        key_takeaways = []
+
+        # Checking goals per game
+        # One of the top GPG teams
+        if self.goals_per_game() >= 3.5:
+            key_takeaways\
+                .append(" (+) Team has one of the highest goals per game average in the league")
+        # Good PPG team
+        elif self.goals_per_game() >= 3.2:
+            key_takeaways.append(" (+) Team has a strong goals per game average")
+        # Bad PPG team
+        elif self.goals_per_game() <= 2:
+            key_takeaways.append(" (-) Team has a weak goals per game average")
+        # One of the bottom PPG teams
+        elif self.goals_per_game() <= 2.7:
+            key_takeaways\
+                .append(" (-) Team has one of the lowest goals per game average in the league")
+
+        # Checking shooting percentage
+        # One of the top SP% teams
+        if self.shooting_percentage() >= 11:
+            key_takeaways \
+                .append(" (+) Team has one of the highest shooting percentages in the league")
+        # Good SP% teams
+        elif self.shooting_percentage() >= 9.5:
+            key_takeaways.append(" (+) Team capitalizes on their shots")
+        # Bad SP% teams
+        elif self.shooting_percentage() <= 8.3:
+            key_takeaways.append(" (-) Team doesn't capitalizes on their shots")
+        # One of the bottom SP% teams
+        elif self.shooting_percentage() <= 8.8:
+            key_takeaways \
+                .append(" (-) Team has one of the lowest shooting percentages in the league")
+
+        # Checking save percentage
+        # One of the top SV% teams
+        if self.save_percentage() >= 0.92:
+            key_takeaways \
+                .append(" (+) Team has one of the highest save percentages in the league")
+        # Good SV% teams
+        elif self.save_percentage() >= 0.91:
+            key_takeaways.append(" (+) Teams saves a good save percentage")
+        # Bad SV% teams
+        elif self.save_percentage() <= 0.895:
+            key_takeaways.append(" (-) Team has a weak save percentage")
+        # One of the bottom SV% teams
+        elif self.save_percentage() <= 0.9:
+            key_takeaways \
+                .append(" (-) Team has one of the lowest save percentages in the league")
+
+        # Checking pdo (how lucky a team is)
+        # Lucky team
+        if self.pdo() >= 102:
+            key_takeaways.append(" (+/-) Lucky team. Stats may be inflated")
+        # Unlucky team
+        elif self.pdo() <= 98:
+            key_takeaways\
+                .append(" (+/-) Unlucky team. Team may be better than they appear")
+
+        print("Key Takeaways:")
+
+        # If key_takeaways is empty their stats are average
+        if len(key_takeaways) == 0:
+            print(" (+/-) Average offense")
+            print(" (+/-) Average defense")
+        # Output takeaways found earlier
+        else:
+            # Outputting contents of key_takeaways
+            for point in key_takeaways:
+                print(point)
+
+        print()
 
     # Outputs the teams current statistics regarding standings
     def special_teams_report(self):
@@ -213,6 +285,22 @@ class Hockey_Team(object):
         print(" Penalty Kill Percentage: {}%\n"
               .format(self.pk_percentage()))
 
+        key_takeaways = []
+
+        print("Key Takeaways:")
+
+        # If key_takeaways is empty their stats are average
+        if len(key_takeaways) == 0:
+            print(" (+/-) Average offense")
+            print(" (+/-) Average defense")
+        # Output takeaways found earlier
+        else:
+            # Outputting contents of key_takeaways
+            for point in key_takeaways:
+                print(point)
+
+        print()
+
     # Outputs the teams current statistics regarding standings
     def analyze_matchup(self, opposing_team):
         pass
@@ -226,7 +314,7 @@ teams_dictionary = {}
 for team in teams:
     teams_dictionary[team.name.upper()] = Hockey_Team(team)
 
-nhl_team = teams_dictionary["OTTAWA SENATORS"]
+nhl_team = teams_dictionary["DETROIT RED WINGS"]
 
 print(type(nhl_team))
 
@@ -254,5 +342,8 @@ nhl_team.team_season_report()
 nhl_team.offense_defense_report()
 nhl_team.special_teams_report()
 
-print(nhl_team.points_percentage())
+print(nhl_team.pdo())
+print(nhl_team.shooting_percentage())
+print(nhl_team.save_percentage())
+
 
