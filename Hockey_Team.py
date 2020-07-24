@@ -119,19 +119,82 @@ class Hockey_Team(object):
         print(" League Standing: {}/31\n"
               .format(self.league_standing()))
 
+        self.team_takeaways()
+        print()
+
+    # Outputs the teams current statistics regarding standings
+    def offense_defense_report(self):
+        print("{} Offense/Defense Report:".format(self.name()))
+        print("=" * 43)
+
+        # Goals for
+        print(" Goals for: {}".format(self.goals_for()))
+
+        if self.goals_against() is not None:
+            # Goals against
+            print(" Goals against: {}".format(self.goals_against()))
+            # Goal differential
+            print(" Goal Differential: {}"
+                  .format(self.goal_differential()))
+        # Goals per game
+        print(" Goals per Game: {:.3}".format(self.goals_per_game()))
+        # Shooting percentage
+        print(" Shooting percentage (SP%): {}%"
+              .format(self.shooting_percentage()))
+        # Save percentage
+        print(" Save percentage (SV%): {:.1%}"
+              .format(self.save_percentage()))
+        # PDO
+        print(" PDO (SPSV%): {}\n".format(self.pdo()))
+
+        self.offense_defense_takeaways()
+        print()
+
+    # Outputs the teams current statistics regarding standings
+    def special_teams_report(self):
+        print("{} Special Teams Report:".format(self.name()))
+        print("=" * 41)
+
+        # Games played
+        print(" Power Play Opportunities: {}"
+              .format(self.pp_opportunities()))
+        # Wins
+        print(" Power Play Goals For: {}".format(self.pp_goals_for()))
+        # Losses
+        print(" Power Play Goals Against: {}"
+              .format(self.pp_goals_against()))
+        # OT Losses
+        print(" Special Teams Goal Differential: {}"
+              .format(self.pp_goals_for() - self.pp_goals_against()))
+        # Points
+        print(" Power Play Percentage: {}%"
+              .format(self.pp_percentage()))
+        # points percentage
+        print(" Penalty Kill Percentage: {}%\n"
+              .format(self.pk_percentage()))
+
+        self.special_teams_takeaways()
+        print()
+
+    # Outputs the teams current statistics regarding standings
+    def analyze_matchup(self, opposing_team):
+        pass
+
+    # Outputs keys takeaways about the teams overall statistics
+    def team_takeaways(self):
         key_takeaways = []
 
         # Checking points percentage
         # Points percentage above 65%
         if self.points_percentage() >= .650:
-            key_takeaways\
+            key_takeaways \
                 .append(" (+) Team has one of the highest point percentages in the league")
         # Points percentage above 57.5%
         elif self.points_percentage() >= .575:
             key_takeaways.append(" (+) Team has a strong points percentage")
         # Points percentage below 45%
         elif self.points_percentage() <= .450:
-            key_takeaways\
+            key_takeaways \
                 .append(" (-) Team has one of the lowest point percentages in the league")
         # Points percentage below 50%
         elif self.points_percentage() <= .500:
@@ -162,39 +225,14 @@ class Hockey_Team(object):
             for point in key_takeaways:
                 print(point)
 
-        print()
-
-    # Outputs the teams current statistics regarding standings
-    def offense_defense_report(self):
-        print("{} Offense/Defense Report:".format(self.name()))
-        print("=" * 43)
-
-        # Goals for
-        print(" Goals for: {}".format(self.goals_for()))
-
-        if self.goals_against() is not None:
-            # Goals against
-            print(" Goals against: {}".format(self.goals_against()))
-            # Goal differential
-            print(" Goal Differential: {}"
-                  .format(self.goal_differential()))
-        # Goals per game
-        print(" Goals per Game: {:.3}".format(self.goals_per_game()))
-        # Shooting percentage
-        print(" Shooting percentage (SP%): {}%"
-              .format(self.shooting_percentage()))
-        # Save percentage
-        print(" Save percentage (SV%): {:.1%}"
-              .format(self.save_percentage()))
-        # PDO
-        print(" PDO (SPSV%): {}\n".format(self.pdo()))
-
+    # Outputs keys takeaways about the teams offense and defense
+    def offense_defense_takeaways(self):
         key_takeaways = []
 
         # Checking goals per game
         # One of the top GPG teams
         if self.goals_per_game() >= 3.5:
-            key_takeaways\
+            key_takeaways \
                 .append(" (+) Team has one of the highest goals per game average in the league")
         # Good PPG team
         elif self.goals_per_game() >= 3.2:
@@ -204,7 +242,7 @@ class Hockey_Team(object):
             key_takeaways.append(" (-) Team has a weak goals per game average")
         # One of the bottom PPG teams
         elif self.goals_per_game() <= 2.7:
-            key_takeaways\
+            key_takeaways \
                 .append(" (-) Team has one of the lowest goals per game average in the league")
 
         # Checking shooting percentage
@@ -245,7 +283,7 @@ class Hockey_Team(object):
             key_takeaways.append(" (+/-) Lucky team. Stats may be inflated")
         # Unlucky team
         elif self.pdo() <= 98:
-            key_takeaways\
+            key_takeaways \
                 .append(" (+/-) Unlucky team. Team may be better than they appear")
 
         print("Key Takeaways:")
@@ -260,32 +298,45 @@ class Hockey_Team(object):
             for point in key_takeaways:
                 print(point)
 
-        print()
-
-    # Outputs the teams current statistics regarding standings
-    def special_teams_report(self):
-        print("{} Special Teams Report:".format(self.name()))
-        print("=" * 41)
-
-        # Games played
-        print(" Power Play Opportunities: {}"
-              .format(self.pp_opportunities()))
-        # Wins
-        print(" Power Play Goals For: {}".format(self.pp_goals_for()))
-        # Losses
-        print(" Power Play Goals Against: {}"
-              .format(self.pp_goals_against()))
-        # OT Losses
-        print(" Special Teams Goal Differential: {}"
-              .format(self.pp_goals_for() - self.pp_goals_against()))
-        # Points
-        print(" Power Play Percentage: {}%"
-              .format(self.pp_percentage()))
-        # points percentage
-        print(" Penalty Kill Percentage: {}%\n"
-              .format(self.pk_percentage()))
-
+    # Outputs keys takeaways about the teams special teams
+    def special_teams_takeaways(self):
         key_takeaways = []
+
+        # Checking power play percentage
+        # One of the top PP% teams
+        if self.pp_percentage() >= 25:
+            key_takeaways.append(" (+) Team is deadly on the power play")
+        # Good PP% teams
+        elif self.pp_percentage() >= 21:
+            key_takeaways.append(" (+) Team has a strong power play unit")
+        # One of the bottom PP% teams
+        elif self.pp_percentage() <= 15:
+            key_takeaways.append(" (-) Team is not a threat on the power play")
+        # Bad PP% teams
+        elif self.pp_percentage() <= 18:
+            key_takeaways.append(" (-) Team has a weak power play unit")
+        # If none of the above, stat is average for this category
+        else:
+            key_takeaways.append(" (+/-) Team has an average power play unit")
+
+        # Checking penalty kill percentage
+        # One of the top PK% teams
+        if self.pk_percentage() >= 84:
+            key_takeaways \
+                .append(" (+) Team is highly efficient at killing penalties")
+        # Good PK% teams
+        elif self.pk_percentage() >= 82:
+            key_takeaways.append(" (+) Team has a strong penalty killing unit")
+        # One of the bottom PK% teams
+        elif self.pk_percentage() <= 78:
+            key_takeaways.append(" (-) Team cannot kill penalties")
+        # Bad PK% teams
+        elif self.pk_percentage() <= 75:
+            key_takeaways.append(" (-) Team has a weak penalty killing unit")
+        # If none of the above, stat is average for this category
+        else:
+            key_takeaways \
+                .append(" (+/-) Team has an average penalty killing unit")
 
         print("Key Takeaways:")
 
@@ -299,12 +350,6 @@ class Hockey_Team(object):
             for point in key_takeaways:
                 print(point)
 
-        print()
-
-    # Outputs the teams current statistics regarding standings
-    def analyze_matchup(self, opposing_team):
-        pass
-
 
 # unit testing
 teams = Teams(2020)
@@ -314,7 +359,7 @@ teams_dictionary = {}
 for team in teams:
     teams_dictionary[team.name.upper()] = Hockey_Team(team)
 
-nhl_team = teams_dictionary["DETROIT RED WINGS"]
+nhl_team = teams_dictionary["PITTSBURGH PENGUINS"]
 
 print(type(nhl_team))
 
@@ -345,5 +390,3 @@ nhl_team.special_teams_report()
 print(nhl_team.pdo())
 print(nhl_team.shooting_percentage())
 print(nhl_team.save_percentage())
-
-
