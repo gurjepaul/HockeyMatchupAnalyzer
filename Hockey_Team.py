@@ -181,7 +181,7 @@ class Hockey_Team(object):
         pass
 
     # Outputs keys takeaways about the teams overall statistics
-    def team_takeaways(self):
+    def _team_takeaways(self):
         key_takeaways = []
 
         # Checking points percentage
@@ -226,7 +226,7 @@ class Hockey_Team(object):
                 print(point)
 
     # Outputs keys takeaways about the teams offense and defense
-    def offense_defense_takeaways(self):
+    def _offense_defense_takeaways(self):
         key_takeaways = []
 
         # Checking goals per game
@@ -299,7 +299,7 @@ class Hockey_Team(object):
                 print(point)
 
     # Outputs keys takeaways about the teams special teams
-    def special_teams_takeaways(self):
+    def _special_teams_takeaways(self):
         key_takeaways = []
 
         # Checking power play percentage
