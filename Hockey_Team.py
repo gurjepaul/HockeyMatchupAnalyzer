@@ -119,7 +119,7 @@ class Hockey_Team(object):
         print(" League Standing: {}/31\n"
               .format(self.league_standing()))
 
-        self.team_takeaways()
+        self._team_takeaways()
         print()
 
     # Outputs the teams current statistics regarding standings
@@ -147,7 +147,7 @@ class Hockey_Team(object):
         # PDO
         print(" PDO (SPSV%): {}\n".format(self.pdo()))
 
-        self.offense_defense_takeaways()
+        self._offense_defense_takeaways()
         print()
 
     # Outputs the teams current statistics regarding standings
@@ -173,7 +173,7 @@ class Hockey_Team(object):
         print(" Penalty Kill Percentage: {}%\n"
               .format(self.pk_percentage()))
 
-        self.special_teams_takeaways()
+        self._special_teams_takeaways()
         print()
 
     # Outputs the teams current statistics regarding standings
@@ -351,42 +351,42 @@ class Hockey_Team(object):
                 print(point)
 
 
-# unit testing
-teams = Teams(2020)
-
-teams_dictionary = {}
-
-for team in teams:
-    teams_dictionary[team.name.upper()] = Hockey_Team(team)
-
-nhl_team = teams_dictionary["PITTSBURGH PENGUINS"]
-
-print(type(nhl_team))
-
-# testing all the class getter methods
-print(nhl_team.name())
-print(nhl_team.age())
-print(nhl_team.games_played())
-print(nhl_team.wins())
-print(nhl_team.losses())
-print(nhl_team.overtime_losses())
-print(nhl_team.points())
-print(nhl_team.points_percentage())
-print(nhl_team.league_standing())
-print(nhl_team.goals_for())
-print(nhl_team.goals_against())
-print(nhl_team.pdo())
-print(nhl_team.pp_opportunities())
-print(nhl_team.pp_goals_for())
-print(nhl_team.pp_goals_against())
-print(nhl_team.st_goal_differential())
-print(nhl_team.pp_percentage())
-print(nhl_team.pk_percentage())
-
-nhl_team.team_season_report()
-nhl_team.offense_defense_report()
-nhl_team.special_teams_report()
-
-print(nhl_team.pdo())
-print(nhl_team.shooting_percentage())
-print(nhl_team.save_percentage())
+# # unit testing
+# teams = Teams(2020)
+#
+# teams_dictionary = {}
+#
+# for team in teams:
+#     teams_dictionary[team.name.upper()] = Hockey_Team(team)
+#
+# nhl_team = teams_dictionary["PITTSBURGH PENGUINS"]
+#
+# print(type(nhl_team))
+#
+# # testing all the class getter methods
+# print(nhl_team.name())
+# print(nhl_team.age())
+# print(nhl_team.games_played())
+# print(nhl_team.wins())
+# print(nhl_team.losses())
+# print(nhl_team.overtime_losses())
+# print(nhl_team.points())
+# print(nhl_team.points_percentage())
+# print(nhl_team.league_standing())
+# print(nhl_team.goals_for())
+# print(nhl_team.goals_against())
+# print(nhl_team.pdo())
+# print(nhl_team.pp_opportunities())
+# print(nhl_team.pp_goals_for())
+# print(nhl_team.pp_goals_against())
+# print(nhl_team.st_goal_differential())
+# print(nhl_team.pp_percentage())
+# print(nhl_team.pk_percentage())
+#
+# nhl_team.team_season_report()
+# nhl_team.offense_defense_report()
+# nhl_team.special_teams_report()
+#
+# print(nhl_team.pdo())
+# print(nhl_team.shooting_percentage())
+# print(nhl_team.save_percentage())

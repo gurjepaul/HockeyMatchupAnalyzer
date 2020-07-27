@@ -1,74 +1,90 @@
-# import Hockey_Team and sportsreference
+from Hockey_Team import Hockey_Team
+from sportsreference.nhl.teams import Teams
+
 
 class League(object):
-    __team_names__ = {1: "Anaheim Ducks",
-                      2: "Arizona Coyotes",
-                      3: "Boston Bruins",
-                      4: "Buffalo Sabres",
-                      5: "Calgary Flames",
-                      6: "Carolina Hurricanes",
-                      7: "Chicago Blackhawks",
-                      8: "Colorado Avalanche",
-                      9: "Columbus Blue Jackets",
-                      10: "Dallas Stars",
-                      11: "Detroit Red Wings",
-                      12: "Edmonton Oilers",
-                      13: "Florida Panthers",
-                      14: "Los Angeles Kings",
-                      15: "Minnesota Wild",
-                      16: "Montreal Canadiens",
-                      17: "Nashville Predators",
-                      18: "New Jersey Devils",
-                      19: "New York Islanders",
-                      20: "New York Rangers",
-                      21: "Ottawa Senators",
-                      22: "Philadelphia Flyers",
-                      23: "Pittsburgh Penguins",
-                      24: "St. Louis Blues",
-                      25: "San Jose Sharks",
-                      26: "Tampa Bay Lightning",
-                      27: "Toronto Maple Leafs",
-                      28: "Vancouver Canucks",
-                      29: "Vegas Golden Knights",
-                      30: "Washington Capitals",
-                      31: "Winnipeg Jets"}
+    # Dictionary that contains team names in an alphabetical order
+    _team_names = {1: "Anaheim Ducks",
+                   2: "Arizona Coyotes",
+                   3: "Boston Bruins",
+                   4: "Buffalo Sabres",
+                   5: "Calgary Flames",
+                   6: "Carolina Hurricanes",
+                   7: "Chicago Blackhawks",
+                   8: "Colorado Avalanche",
+                   9: "Columbus Blue Jackets",
+                   10: "Dallas Stars",
+                   11: "Detroit Red Wings",
+                   12: "Edmonton Oilers",
+                   13: "Florida Panthers",
+                   14: "Los Angeles Kings",
+                   15: "Minnesota Wild",
+                   16: "Montreal Canadiens",
+                   17: "Nashville Predators",
+                   18: "New Jersey Devils",
+                   19: "New York Islanders",
+                   20: "New York Rangers",
+                   21: "Ottawa Senators",
+                   22: "Philadelphia Flyers",
+                   23: "Pittsburgh Penguins",
+                   24: "St. Louis Blues",
+                   25: "San Jose Sharks",
+                   26: "Tampa Bay Lightning",
+                   27: "Toronto Maple Leafs",
+                   28: "Vancouver Canucks",
+                   29: "Vegas Golden Knights",
+                   30: "Washington Capitals",
+                   31: "Winnipeg Jets"}
 
-    __teams__ = {}
+    # Dictionary that will hold Hockey_Team objects for every team in the NHL
+    _teams = {}
 
     # Constructor
     def __init__(self):
-        self.season = 2020
+        # Fills our instance variable with teams
+        self.create_league(2020)
 
     # Creates dictionary of Hockey_Team objects
-    def create_league(self):
-        pass
+    def create_league(self, year: int):
+        # Getting information for each team from sportsreference library
+        teams = Teams(year)
+
+        # Putting Hockey_Team objects for each team in our dictionary
+        for team in teams:
+            self._teams[team.name.upper()] = Hockey_Team(team)
 
     # Finds and returns a Hockey_Team object in the teams dictionary
-    def retrieve_team(self, selection):
-        # Typecasting to an int if selection is a number
-        if selection in str(__team_names__.keys()):
-            team_selection = int(selection)
-            team_selection = __teams__[__team_names__[team_selection].upper()]
-        # Checking if they inputted a valid str
-        elif type(selection) == str:
-            selections = selection.split()
-            selection = None
+    def retrieve_team(self, user_input: str) -> Hockey_Team:
+        # If the selection is in _team_names
+        if user_input in str(self._team_names.keys()):
+            # returning team in _teams using key from _team_names
+            return self._teams[self._team_names[int(user_input)].upper()]
+        # Checking if they entered a potential team name in _teams
+        else:
+            # Splitting their input into keywords
+            keywords = user_input.upper().split()
+
             # Check valid input for each str they input
-            for word in selections:
-                # Break if we already got a hit
-                if valid_selection:
-                    break
-                # Comparing against each team
-                for team in __teams__:
-                    # Check if we got a hit
+            for word in keywords:
+                # Comparing keywords against each team against each team
+                for team in self._teams:
+                    # Check if keyword got a hit
                     if word in team:
-                        # Get the team object
-                        team_selection = __teams__[team]
-                        # Set to true so it break the loop
-                        valid_selection = True
-                        break
+                        # Returning Hockey_Team object
+                        return self._teams[team]
+
         return None
 
     # Displays the name of every team in the league alphabetically
     def display_teams(self):
-        pass
+        for team_number in range(1, 32):
+            print("{:2}. {}".format(team_number, self._team_names[team_number]))
+
+
+# Unit testing
+covid_league = League()
+covid_league.display_teams()
+selection = covid_league.retrieve_team("Vancity")
+print(selection.name())
+
+
