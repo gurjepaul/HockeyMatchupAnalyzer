@@ -281,52 +281,52 @@ class HockeyTeam(object):
     def analyze_matchup(self, opposing_team):
         pass
 
-    def _team_takeaways(self):
-        """
-        Outputs key takeaways regarding the teams general statistics
-        """
-        key_takeaways = []
-
-        # Checking points percentage
-        # Points percentage above 65%
-        if self.points_percentage() >= .650:
-            key_takeaways \
-                .append(" (+) Team has one of the highest point percentages in the league")
-        # Points percentage above 57.5%
-        elif self.points_percentage() >= .575:
-            key_takeaways.append(" (+) Team has a strong points percentage")
-        # Points percentage below 45%
-        elif self.points_percentage() <= .450:
-            key_takeaways \
-                .append(" (-) Team has one of the lowest point percentages in the league")
-        # Points percentage below 50%
-        elif self.points_percentage() <= .500:
-            key_takeaways.append(" (-) Team has a weak points percentage")
-
-        # Checking team rank
-        # Top 5 team in the league
-        if self.league_standing() <= 5:
-            key_takeaways.append(" (+) One of the top teams in the league")
-        # Top 10 team in the league
-        elif self.league_standing() <= 10:
-            key_takeaways.append(" (+) Team has a high league standing")
-        # bottom 6 team in the league
-        elif self.league_standing() >= 25:
-            key_takeaways.append(" (-) One of worst teams in the league")
-        # Bottom 11 team in the league
-        elif self.league_standing() >= 20:
-            key_takeaways.append(" (-) Team has a low league standing")
-
-        print("Key Takeaways:")
-
-        # If key_takeaways is empty their stats are average
-        if len(key_takeaways) == 0:
-            print(" (+/-) Pretty average team all around the board")
-        # Output takeaways found earlier
-        else:
-            # Outputting contents of key_takeaways
-            for point in key_takeaways:
-                print(point)
+    # def _team_takeaways(self):
+    #     """
+    #     Outputs key takeaways regarding the teams general statistics
+    #     """
+    #     key_takeaways = []
+    #
+    #     # Checking points percentage
+    #     # Points percentage above 65%
+    #     if self.points_percentage() >= .650:
+    #         key_takeaways \
+    #             .append(" (+) Team has one of the highest point percentages in the league")
+    #     # Points percentage above 57.5%
+    #     elif self.points_percentage() >= .575:
+    #         key_takeaways.append(" (+) Team has a strong points percentage")
+    #     # Points percentage below 45%
+    #     elif self.points_percentage() <= .450:
+    #         key_takeaways \
+    #             .append(" (-) Team has one of the lowest point percentages in the league")
+    #     # Points percentage below 50%
+    #     elif self.points_percentage() <= .500:
+    #         key_takeaways.append(" (-) Team has a weak points percentage")
+    #
+    #     # Checking team rank
+    #     # Top 5 team in the league
+    #     if self.league_standing() <= 5:
+    #         key_takeaways.append(" (+) One of the top teams in the league")
+    #     # Top 10 team in the league
+    #     elif self.league_standing() <= 10:
+    #         key_takeaways.append(" (+) Team has a high league standing")
+    #     # bottom 6 team in the league
+    #     elif self.league_standing() >= 25:
+    #         key_takeaways.append(" (-) One of worst teams in the league")
+    #     # Bottom 11 team in the league
+    #     elif self.league_standing() >= 20:
+    #         key_takeaways.append(" (-) Team has a low league standing")
+    #
+    #     print("Key Takeaways:")
+    #
+    #     # If key_takeaways is empty their stats are average
+    #     if len(key_takeaways) == 0:
+    #         print(" (+/-) Pretty average team all around the board")
+    #     # Output takeaways found earlier
+    #     else:
+    #         # Outputting contents of key_takeaways
+    #         for point in key_takeaways:
+    #             print(point)
 
     def _offense_defense_takeaways(self):
         """

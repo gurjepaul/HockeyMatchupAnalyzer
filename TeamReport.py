@@ -1,11 +1,12 @@
 from abc import abstractmethod
 from HockeyTeam import HockeyTeam
+from sportsreference.nhl.teams import Teams
 
 
 class TeamReport(object):
     """ Abstract superclass for report objects """
 
-    def __init__(self, team):
+    def __init__(self, team: HockeyTeam):
         """
         Constructor that initializes/calls methods to generate the report
         """
